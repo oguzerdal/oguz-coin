@@ -33,10 +33,28 @@ class Blockchain {
         this.chain.push(newBlock);
     }
 
+    isChainValid() {
+        for (let i = 1; i < this.chain.length; i++) {
+            const currentBlock = this.chain[i];
+            const previousBlock = this.chain[i - 1];
+
+            if(currentBlock.hash != currentBlock.calculateHash()){
+                return false;
+            }
+
+            if(currentBlock.previousHash != previousBlock.hash){
+                return false;
+            }
+
+        }
+        
+        return true;
+    }
+
 }
 
 const oguzCoin = new Blockchain();
-oguzCoin.addBlock( new Block (1, "10/07/2017", { amount: 4 }, ))
-oguzCoin.addBlock( new Block (2, "10/07/2015", { amount: 10 }, ))
+oguzCoin.addBlock(new Block(1, "10/07/2017", { amount: 4 },))
+oguzCoin.addBlock(new Block(2, "10/07/2015", { amount: 10 },))
 
 console.log(JSON.stringify(oguzCoin, null, 4))
